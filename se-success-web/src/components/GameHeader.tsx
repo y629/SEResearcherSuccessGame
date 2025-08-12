@@ -40,10 +40,10 @@ export default function GameHeader({
         </div>
         
         {/* スタミナ */}
-        <div className="bg-green-600 text-white p-3 rounded-lg text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+        <div className="bg-green-800 text-white p-3 rounded-lg text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
           <div className="text-base font-bold">⚡ スタミナ</div>
           <div className="text-xl font-bold">{stamina}/{maxStamina}</div>
-          <div className="w-full bg-green-800 rounded-full h-2 mt-1 overflow-hidden">
+          <div className="w-full bg-green-900 rounded-full h-2 mt-1 overflow-hidden">
             <div 
               className="bg-green-300 h-2 rounded-full transition-all duration-700 ease-out relative"
               style={{ width: `${staminaPercentage}%` }}
@@ -54,16 +54,16 @@ export default function GameHeader({
           </div>
           {/* スタミナ警告表示 */}
           {staminaPercentage < 30 && (
-            <div className="text-sm text-yellow-200 mt-1 animate-pulse">
+            <div className="text-sm text-yellow-200 mt-1 animate-pulse font-semibold">
               ⚠️ スタミナ不足
             </div>
           )}
         </div>
         
         {/* 所持金 */}
-        <div className="bg-yellow-600 text-white p-3 rounded-lg text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
+        <div className="bg-yellow-600 text-black p-3 rounded-lg text-center transform hover:scale-105 transition-all duration-300 hover:shadow-lg">
           <div className="text-base font-bold">所持金</div>
-          <div className="text-xl font-bold hover:text-yellow-200 transition-colors duration-300">
+          <div className="text-xl font-bold hover:text-gray-800 transition-colors duration-300">
             {money.toLocaleString()}円
           </div>
           {/* お金の絵文字 */}

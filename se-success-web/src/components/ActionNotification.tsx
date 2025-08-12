@@ -7,6 +7,7 @@ interface ActionNotificationProps {
   currentStats: Stats;
   isVisible: boolean;
   onClose: () => void;
+  onConfirm?: () => void;
 }
 
 export default function ActionNotification({ 
@@ -14,7 +15,8 @@ export default function ActionNotification({
   previousStats, 
   currentStats, 
   isVisible, 
-  onClose 
+  onClose,
+  onConfirm
 }: ActionNotificationProps) {
   if (!isVisible) return null;
 
@@ -163,7 +165,13 @@ export default function ActionNotification({
           {/* 閉じるボタン */}
           <div className="text-center">
             <button
-              onClick={onClose}
+              onClick={() => {
+                if (onConfirm) {
+                  onConfirm();
+                } else {
+                  onClose();
+                }
+              }}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors transform hover:scale-105 font-medium"
             >
               確認

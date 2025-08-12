@@ -51,8 +51,21 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
   const centerX = 110;
   const centerY = 120;
   const radius = 100;
-  const statKeys = Object.keys(stats) as (keyof Stats)[];
-  const numStats = statKeys.length;
+  
+  // レーダーチャートに表示する統計値のみを定義（お金などは除外）
+  const radarStatKeys: (keyof Stats)[] = [
+    'writing',
+    'coding', 
+    'presentation',
+    'collaboration',
+    'power',
+    'catchup',
+    'english',
+    'communication',
+    'insight'
+  ];
+  
+  const numStats = radarStatKeys.length;
 
   // 各能力値の角度を計算（上から時計回り）
   const getAngle = (index: number) => {
@@ -61,7 +74,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
 
   // 能力値の座標を計算
   const getStatPosition = (statKey: keyof Stats, value: number) => {
-    const index = statKeys.indexOf(statKey);
+    const index = radarStatKeys.indexOf(statKey);
     const angle = getAngle(index);
     const normalizedValue = value / 100; // 0-1に正規化
     const x = centerX + Math.cos(angle) * radius * normalizedValue;
@@ -79,7 +92,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
 
   // レーダーチャートの多角形のパスを生成
   const generateRadarPath = () => {
-    const points = statKeys.map(statKey => {
+    const points = radarStatKeys.map(statKey => {
       const { x, y } = getStatPosition(statKey, stats[statKey]);
       return `${x},${y}`;
     });
@@ -89,7 +102,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
   // 前回の能力値の多角形のパスを生成（変化量表示用）
   const generatePreviousRadarPath = () => {
     if (!previousStats) return '';
-    const points = statKeys.map(statKey => {
+    const points = radarStatKeys.map(statKey => {
       const { x, y } = getStatPosition(statKey, previousStats[statKey]);
       return `${x},${y}`;
     });
@@ -99,7 +112,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
   // 各ランクの基準線のパスを生成
   const generateRankBaselinePath = (rank: string) => {
     const rankMinValue = getRankMinValue(rank);
-    const points = statKeys.map(statKey => {
+    const points = radarStatKeys.map(statKey => {
       const { x, y } = getStatPosition(statKey, rankMinValue);
       return `${x},${y}`;
     });
@@ -188,7 +201,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
           <circle cx={centerX} cy={centerY} r={radius * 0.25} fill="none" stroke="#374151" strokeWidth="1" />
           
           {/* 軸線 */}
-          {statKeys.map((statKey, index) => {
+          {radarStatKeys.map((statKey, index) => {
             const angle = getAngle(index);
             const endX = centerX + Math.cos(angle) * radius;
             const endY = centerY + Math.sin(angle) * radius;
@@ -239,7 +252,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
           />
 
           {/* 各能力値のポイント */}
-          {statKeys.map((statKey) => {
+          {radarStatKeys.map((statKey) => {
             const { x, y } = getStatPosition(statKey, stats[statKey]);
             return (
               <circle
@@ -255,7 +268,7 @@ export default function RadarChart({ stats, previousStats }: RadarChartProps) {
           })}
           
           {/* 各能力値のラベル */}
-          {statKeys.map((statKey, index) => {
+          {radarStatKeys.map((statKey, index) => {
             const { x, y } = getAxisEndPosition(index);
             const value = stats[statKey];
             const rank = getStatRank(value);

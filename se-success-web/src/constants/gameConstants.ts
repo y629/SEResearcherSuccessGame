@@ -22,6 +22,8 @@ export const initStats = (): Stats => {
     english: getRandomStat(),            // ランダム値（Gランク）
     communication: getRandomStat(),      // ランダム値（Gランク）
     insight: getRandomStat(),            // ランダム値（Gランク）
+    money: 5000,                         // 初期資金5000円
+    research: 0,                         // 研究進捗（初期値0）
   };
 };
 
@@ -36,6 +38,8 @@ export const STAT_NAMES: Record<keyof Stats, string> = {
   english: '英語力',
   communication: 'コミュ力',
   insight: 'ひらめき力',
+  money: 'お金',
+  research: '研究進捗',
 };
 
 // 行動の定義
