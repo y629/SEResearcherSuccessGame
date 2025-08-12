@@ -5,7 +5,7 @@
 [![React](https://img.shields.io/badge/React-19.1.0-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
-パワプロのサクセスモードをSE研究者向けにアレンジしたゲームです。
+パ○プロのサクセスモード風にSE研究者を育成するゲームです。
 
 ## 技術スタック
 
