@@ -1,14 +1,22 @@
-# SE 研究者 Success Game
+# SEResearcherSuccessGame
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+[![Next.js](https://img.shields.io/badge/Next.js-15.4.6-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19.1.0-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 
 パワプロのサクセスモードをSE研究者向けにアレンジしたゲームです。
 
 ## 技術スタック
+
+### 主要技術
 
 - **フロントエンド**: Next.js 14 + React + TypeScript
 - **状態管理**: XState (ステートマシン)
 - **スタイリング**: Tailwind CSS
 - **音声**: Howler.js
 - **データ管理**: TypeScript型定義
+- **パッケージマネージャー**: pnpm
 
 ## プロジェクト構造
 
@@ -81,6 +89,8 @@ docker compose up
 ```
 
 ## 開発の流れ
+
+[![Status](https://img.shields.io/badge/Status-In%20Development-blue?style=for-the-badge)](https://github.com/your-username/se-success-game)
 
 1. ✅ 基本的なプロジェクト構造の構築
 2. ✅ コンポーネントの実装
