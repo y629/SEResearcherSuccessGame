@@ -5,89 +5,107 @@
 ## 技術スタック
 
 - **フロントエンド**: Next.js 14 + React + TypeScript
-- **状態管理**: XState + Zustand
-- **スタイリング**: Tailwind CSS + shadcn/ui
+- **状態管理**: XState (ステートマシン)
+- **スタイリング**: Tailwind CSS
 - **音声**: Howler.js
-- **2D演出**: PixiJS
-- **データ**: YAML/JSON + Zod
+- **データ管理**: TypeScript型定義
+
+## プロジェクト構造
+
+```
+se-success-web/
+├── src/
+│   ├── app/                 # Next.js App Router
+│   │   ├── layout.tsx      # アプリレイアウト
+│   │   ├── page.tsx        # メインページ
+│   │   └── globals.css     # グローバルスタイル
+│   ├── components/          # 再利用可能なコンポーネント
+│   │   ├── ActionButtons.tsx    # アクションボタン
+│   │   ├── ActionLog.tsx        # アクションログ
+│   │   ├── ActionNotification.tsx # アクション通知
+│   │   ├── GameHeader.tsx       # ゲームヘッダー
+│   │   ├── NameInputModal.tsx   # 名前入力モーダル
+│   │   ├── RadarChart.tsx       # レーダーチャート
+│   │   └── StatBar.tsx          # ステータスバー
+│   ├── machines/            # XStateステートマシン
+│   │   └── gameMachine.ts   # ゲームの状態管理
+│   ├── types/               # TypeScript型定義
+│   │   ├── game.d.ts        # ゲーム関連の型
+│   │   └── howler.d.ts      # Howler.jsの型定義
+│   ├── constants/           # 定数
+│   │   └── gameConstants.ts # ゲーム定数
+│   └── content/             # ゲームコンテンツ
+│       └── scenarios.ts     # シナリオデータ
+├── public/                  # 静的ファイル
+│   ├── sounds/              # 音声ファイル
+│   │   ├── decision.wav     # 決定音
+│   │   └── main_theme.wav  # メインテーマ
+│   └── images/              # 画像ファイル
+└── docker/                  # Docker設定
+    ├── web.Dockerfile       # Webアプリ用Dockerfile
+    └── docker-entrypoint.sh # Docker起動スクリプト
+```
+
+## ゲームの特徴
+
+- **能力システム**: 技術力、研究力、コミュニケーション力、共同研究・交渉能力の4つのステータス
+- **アクションシステム**: 様々な行動で能力を向上させる
+- **音声演出**: BGMと効果音でゲーム体験を向上
+- **モダンUI**: Tailwind CSSを使用した美しいインターフェース
 
 ## 開発環境セットアップ
 
-### 1. Docker環境の構築
+### 1. 依存関係のインストール
+
+```bash
+cd se-success-web
+pnpm install
+```
+
+### 2. 開発サーバーの起動
+
+```bash
+pnpm dev
+```
+
+ブラウザで http://localhost:3000 にアクセスしてください。
+
+### 3. Docker環境での実行（オプション）
 
 ```bash
 # Dockerイメージをビルド
 docker compose build
 
-# コンテナを起動してシェルに入る
-docker compose run --rm web bash
-```
-
-### 2. プロジェクト初期化（コンテナ内で実行）
-
-```bash
-# Next.jsアプリを作成
-pnpm dlx create-next-app@latest . \
-  --ts --eslint --tailwind --app --src-dir --import-alias "@/*" --no-git
-
-# 必要なライブラリをインストール
-pnpm add howler xstate zustand zod yaml
-pnpm add -D @types/howler vitest @testing-library/react @testing-library/jest-dom jsdom playwright
-
-# Playwrightのセットアップ（E2Eテスト用）
-npx playwright install
-```
-
-### 3. 開発サーバーの起動
-
-```bash
-# コンテナ内で
-pnpm dev
-
-# または、ホスト側から
+# コンテナを起動
 docker compose up
 ```
 
-ブラウザで http://localhost:3000 にアクセスしてください。
-
-## プロジェクト構造
-
-```
-src/
-├── app/                 # Next.js App Router
-├── components/          # 再利用可能なコンポーネント
-├── machines/            # XStateステートマシン
-├── stores/              # Zustandストア
-├── types/               # TypeScript型定義
-└── utils/               # ユーティリティ関数
-
-public/
-├── sounds/              # 音声ファイル
-└── images/              # 画像ファイル
-
-packages/                # 将来的なモノレポ構成
-├── game-core/           # ゲームロジック
-├── content/             # ゲームデータ
-└── schemas/             # データスキーマ
-```
-
-## ゲームの特徴
-
-- **週単位の進行**: 研究者の日常を週単位でシミュレート
-- **能力育成**: 論文執筆、実験、申請などの行動で能力を向上
-- **イベントシステム**: 学会採択、査読、計算資源問題などのランダムイベント
-- **時間管理**: 限られた時間内で効率的に成果を上げる
-- **音声演出**: BGMと効果音でゲーム体験を向上
-
 ## 開発の流れ
 
-1. 基本的な週サイクルの実装
-2. 行動システムの実装
-3. イベントシステムの実装
-4. 音声システムの統合
-5. UI/UXの改善
-6. バランス調整
-7. テストの実装
+1. ✅ 基本的なプロジェクト構造の構築
+2. ✅ コンポーネントの実装
+3. ✅ ゲーム状態管理の実装
+4. ✅ 音声システムの統合
+5. 🔄 UI/UXの改善（進行中）
+6. ⏳ ゲームバランスの調整
+7. ⏳ テストの実装
+
+## 現在実装済みの機能
+
+- ゲームの基本UI（ヘッダー、ステータスバー、アクションボタン）
+- 名前入力モーダル
+- アクションログ表示
+- レーダーチャートによる能力表示
+- 音声システム（BGM、効果音）
+- XStateによる状態管理
+
+## 今後の開発予定
+
+- より詳細なゲームロジックの実装
+- シナリオシステムの拡充
+- セーブ/ロード機能
+- モバイル対応
+- パフォーマンス最適化
 
 ## ライセンス
 
