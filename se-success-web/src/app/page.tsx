@@ -8,6 +8,7 @@ import ActionLog from "@/components/ActionLog";
 import RadarChart from "@/components/RadarChart";
 import ActionNotification from "@/components/ActionNotification";
 import NameInputModal from "@/components/NameInputModal";
+import TutorialModal from "@/components/TutorialModal";
 
 export default function Home() {
   const [stats, setStats] = useState<Stats>(initStats());
@@ -30,6 +31,9 @@ export default function Home() {
   const [researcherName, setResearcherName] = useState<string>('');
   const [showNameInput, setShowNameInput] = useState<boolean>(false);
   
+  // チュートリアルの状態管理
+  const [showTutorial, setShowTutorial] = useState<boolean>(false);
+  
   // クリアまでの残り週数を計算（例：52週でクリアと仮定）
   const totalWeeksToClear = 52;
   const weeksUntilClear = Math.max(0, totalWeeksToClear - week);
@@ -49,12 +53,19 @@ export default function Home() {
     setResearcherName(name);
     localStorage.setItem('researcherName', name);
     setShowNameInput(false);
+    // 名前入力完了後にチュートリアルを表示
+    setShowTutorial(true);
   };
   
   // 通知ウィンドウを閉じる関数
   const closeNotification = () => {
     setIsNotificationVisible(false);
     setNotificationAction(null);
+  };
+  
+  // チュートリアルを閉じる関数
+  const closeTutorial = () => {
+    setShowTutorial(false);
   };
 
   const handleAction = (action: Action) => {
@@ -77,7 +88,7 @@ export default function Home() {
     }
     
     // お金の報酬を処理
-    if (typeof action.moneyReward === 'number' && action.moneyReward > 0) {
+    if (action.moneyReward !== undefined && action.moneyReward > 0) {
       setMoney(prev => prev + action.moneyReward);
     }
     
@@ -109,6 +120,7 @@ export default function Home() {
     setCurrentStamina(100);
     setMoney(11350);
     setShowNameInput(true); // リセット時にも名前入力モーダルを表示
+    setShowTutorial(false); // チュートリアルをリセット
   };
 
   return (
@@ -163,7 +175,14 @@ export default function Home() {
         </div>
 
         <div className="mt-8 bg-gray-700 border border-gray-600 rounded-xl shadow-lg p-6">
-          <div className="flex justify-end">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={() => setShowTutorial(true)}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors transform hover:scale-105 flex items-center gap-2"
+            >
+              <span>❓</span>
+              ヘルプ
+            </button>
             <button
               onClick={handleGameReset}
               className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors transform hover:scale-105"
@@ -190,6 +209,12 @@ export default function Home() {
         isOpen={showNameInput}
         onNameSubmit={handleNameSubmit}
         defaultName={researcherName}
+      />
+      
+      {/* チュートリアルモーダル */}
+      <TutorialModal
+        isOpen={showTutorial}
+        onClose={closeTutorial}
       />
     </main>
   );
